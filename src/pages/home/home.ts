@@ -30,6 +30,15 @@ export class HomePage {
     this.menu.enable(true);
   }
 
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+      .subscribe(response => {
+        this.auth.successfullLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+      error => {});
+  }
+
   login (){
     this
       .auth
@@ -38,8 +47,10 @@ export class HomePage {
         this.auth.successfullLogin(response.headers.get("Authorization"))
         this.navCtrl.setRoot('CategoriasPage');
       })
+  }
 
-
+  signup() {
+    this.navCtrl.push('SignupPage');
   }
 
 }
